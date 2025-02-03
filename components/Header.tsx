@@ -3,6 +3,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { Sparkles, X } from "lucide-react";
+import { AnimatedLogo } from "./logo";
 // import logo from "@/images/logo.png";
 // import SearchBar from "./SearchBar";
 
@@ -25,11 +26,10 @@ function Header() {
       </div>
 
 
-      <div className="flex flex-col lg:flex-row items-center gap-4 p-4">
+      <div className="flex flex-col lg:flex-row items-center gap-4 p-4 fixed top-0 w-full z-50 border-b border-gray-200 bg-white/50 backdrop-blur-xl">
         <div className="flex items-center justify-between w-full lg:w-auto">
-          <Link href="/" className="font-bold text-xl shrink-0 text-green-600">
-            K I S T S Y N C
-          </Link>
+          <AnimatedLogo />
+          
 
           <div className="lg:hidden">
             <SignedIn>
