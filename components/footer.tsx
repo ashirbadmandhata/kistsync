@@ -5,36 +5,16 @@ import Link from "next/link"
 import { Github, Twitter, Linkedin, Mail, MapPin, Phone } from "lucide-react"
 import { AnimatedLogo } from "./logo"
 
-const footerLinks = {
-  product: [
-    { name: "Features", href: "#" },
-    { name: "Pricing", href: "#" },
-    { name: "Download", href: "#" },
-    { name: "Source Code", href: "#" },
-  ],
-  company: [
-    { name: "About", href: "#" },
-    { name: "Blog", href: "#" },
-    { name: "Careers", href: "#" },
-    { name: "Contact", href: "#" },
-  ],
-  legal: [
-    { name: "Privacy Policy", href: "#" },
-    { name: "Terms of Service", href: "#" },
-    { name: "Cookie Policy", href: "#" },
-  ],
-}
-
 export function Footer() {
   return (
-    <footer className="relative bg-gray-900 text-white">
+    <footer className="relative bg-gray-900 text-white mt-auto">
       <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]" />
       <div className="container mx-auto px-4 py-16 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-6">
             <AnimatedLogo />
             <p className="text-gray-400 text-sm max-w-xs">
-              KistSync is an open-source platform that serves as an all-in-one replacement for project management and
+              KISTSYNC is an open-source platform that serves as an all-in-one replacement for project management and
               team collaboration tools.
             </p>
             <div className="flex items-center gap-4">
@@ -53,27 +33,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 md:gap-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="font-semibold text-white mb-4">Product</h3>
-              <ul className="space-y-2">
-                {footerLinks.product.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className="text-gray-400 hover:text-white transition-colors">
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
 
-          
-
+        
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -89,24 +50,12 @@ export function Footer() {
                 </li>
                 <li className="flex items-start gap-3 text-sm text-gray-400">
                   <MapPin className="w-5 h-5 mt-0.5 text-emerald-500" />
-                  <span>123 Tech Street, San Francisco, CA 94107</span>
+                  <span>Technopark, Jatani, BBSR 752050</span>
                 </li>
                 <li className="flex items-start gap-3 text-sm text-gray-400">
                   <Phone className="w-5 h-5 mt-0.5 text-emerald-500" />
                   <span>+1 (555) 123-4567</span>
                 </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-white mb-4">Legal</h3>
-              <ul className="space-y-2">
-                {footerLinks.legal.map((link) => (
-                  <li key={link.name}>
-                    <Link href={link.href} className="text-gray-400 hover:text-white transition-colors text-sm">
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
               </ul>
             </div>
           </motion.div>
