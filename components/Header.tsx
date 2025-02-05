@@ -26,7 +26,7 @@ function Header() {
       </div>
 
 
-      <div className="flex flex-col lg:flex-row items-center gap-4 p-4 fixed top-0 w-full z-50 border-b border-gray-200 bg-white/50 backdrop-blur-xl">
+      <div className="flex flex-col lg:flex-row items-center gap-4 p-4 fixed w-full z-50 border-b border-gray-200 bg-white/50 backdrop-blur-xl">
         <div className="flex items-center justify-between w-full lg:w-auto">
           <AnimatedLogo />
           
