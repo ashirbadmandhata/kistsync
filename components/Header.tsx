@@ -1,36 +1,32 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-// import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { Sparkles, X } from "lucide-react";
 import { AnimatedLogo } from "./logo";
-// import logo from "@/images/logo.png";
-// import SearchBar from "./SearchBar";
 
 function Header() {
   return (
-    <div className="border-b">
+    <div className="sticky top-0 left-0 w-full z-50 border-b bg-white/80 backdrop-blur-lg shadow-md">
       {/* Announcement Banner */}
       <div className="relative bg-gradient-to-r from-blue-600 to-emerald-600 text-white overflow-hidden">
         <div className="container flex items-center gap-x-3 px-4 py-2 text-sm font-medium md:px-6">
           <Sparkles className="h-4 w-4 flex-shrink-0" />
           <div className="relative w-full overflow-hidden">
             <div className="animate-scroll whitespace-nowrap">
-              Introducing to KISTSYNC Book your tickets In a Minute. The website is under development
-              some of the Functionalities My not works Stay tuned we will be
-              back Soon.
+              Introducing to KISTSYNC! Book your tickets in a minute. The website is under development, 
+              and some functionalities may not work. Stay tuned, we'll be back soon!
             </div>
           </div>
           <X className="absolute right-4 h-4 w-4 cursor-pointer opacity-70 hover:opacity-100" />
         </div>
       </div>
 
-
-      <div className="flex flex-col lg:flex-row items-center gap-4 p-4 bg-white/50 backdrop-blur-xl">
+      {/* Main Header */}
+      <div className="flex flex-col lg:flex-row items-center gap-4 p-4">
         <div className="flex items-center justify-between w-full lg:w-auto">
           <AnimatedLogo />
-          
 
+          {/* Mobile User Button */}
           <div className="lg:hidden">
             <SignedIn>
               <UserButton />
@@ -50,6 +46,7 @@ function Header() {
           <SearchBar />
         </div>
 
+        {/* Desktop Buttons */}
         <div className="hidden lg:block ml-auto">
           <SignedIn>
             <div className="flex items-center gap-3">
