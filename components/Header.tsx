@@ -14,7 +14,7 @@ function Header() {
           <div className="relative w-full overflow-hidden">
             <div className="animate-scroll whitespace-nowrap">
               Introducing to KISTSYNC! Book your tickets in a minute. The website is under development, 
-              and some functionalities may not work. Stay tuned, we'll be back soon!
+              and some functionalities may not work. Stay tuned, we&apos;ll be back soon!
             </div>
           </div>
           <X className="absolute right-4 h-4 w-4 cursor-pointer opacity-70 hover:opacity-100" />
