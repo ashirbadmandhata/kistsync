@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import Header from "@/components/Header";
 import { Footer } from "@/components/footer";
+import SyncUserWithConvex from "@/components/SyncUserWithConvex";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "KISTSYNC",
-  description: "Advanced Event Ticketing Platform",
+  description: "Advanced College Event Ticketing Platform",
 };
 
 export default function RootLayout({
@@ -34,6 +35,7 @@ export default function RootLayout({
         <ConvexClientProvider>
           <ClerkProvider>
             <Header />
+            <SyncUserWithConvex />
             <main className="flex-grow">{children}</main>
             <Footer />
           </ClerkProvider>

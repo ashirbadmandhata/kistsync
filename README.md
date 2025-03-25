@@ -1,4 +1,4 @@
-A modern, real-time event ticketing platform built with Next.js 14, Convex, Clerk, and Stripe Connect. Features a sophisticated queue system, real-time updates, and secure payment processing.
+A modern, real-time College event ticketing platform built with Next.js 14, Convex, Clerk, and Stripe Connect. Features a sophisticated queue system, real-time updates, and secure payment processing.
 
 Features
 For Event Attendees
@@ -37,10 +37,3 @@ UI/UX Features
 📱 Responsive design across all devices
 🔄 Loading states and animations
 💫 Micro-interactions for better engagement
-Getting Started
-Prerequisites
-Node.js 18+
-npm/yarn
-Stripe Account
-Clerk Account
-Convex Account
