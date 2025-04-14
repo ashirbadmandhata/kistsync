@@ -1,93 +1,92 @@
 [
-    {
-      "name": "Taylor Swift | The Eras Tour",
-      "description": "Experience Taylor Swift's record-breaking Eras Tour live!",
-      "price": 499.99,
-      "totalTickets": 100,
-      "location": "MetLife Stadium, New Jersey", 
-      "eventDate": 1723845600000,
-      "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
-    },
-    {
-      "name": "NBA Finals 2024 - Game 1",
-      "description": "Witness the opening game of the NBA Finals!",
-      "price": 899.99,
-      "totalTickets": 50,
-      "location": "Madison Square Garden, New York",
-      "eventDate": 1717891200000,
-      "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
-    },
-    {
-      "name": "Hamilton - Broadway",
-      "description": "Don't miss the award-winning musical phenomenon!",
-      "price": 299.99,
-      "totalTickets": 75,
-      "location": "Richard Rodgers Theatre, New York",
-      "eventDate": 1721788200000,
-      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
-    },
-    {
-      "name": "Coldplay World Tour",
-      "description": "Join Coldplay for an unforgettable night of music!",
-      "price": 150.00,
-      "totalTickets": 200,
-      "location": "Wembley Stadium, London",
-      "eventDate": 1726012800000,
-      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
-    },
-    {
-      "name": "Comic Con 2024",
-      "description": "The ultimate pop culture convention!",
-      "price": 85.00,
-      "totalTickets": 1000,
-      "location": "Javits Center, New York",
-      "eventDate": 1728172800000,
-      "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
-    }
-    ,
-    {
-      "name": "Ed Sheeran Mathematics Tour",
-      "description": "An intimate evening with Ed Sheeran performing his greatest hits",
-      "price": 125.00,
-      "totalTickets": 150,
-      "location": "O2 Arena, London",
-      "eventDate": 1729382400000,
-      "userId": "user_2eRTLnPxYQWWbzM8THMTaisFnzE"
-    },
-    {
-      "name": "Premier League: Arsenal vs Manchester United",
-      "description": "A classic Premier League rivalry match at the Emirates",
-      "price": 199.99,
-      "totalTickets": 60,
-      "location": "Emirates Stadium, London",
-      "eventDate": 1722393600000,
-      "userId": "user_2fQUMpNzXSVVczN9UINUbjsGozF"
-    },
-    {
-      "name": "Adele: Weekend with Adele",
-      "description": "Adele's spectacular Las Vegas residency show",
-      "price": 450.00,
-      "totalTickets": 80,
-      "location": "Caesars Palace, Las Vegas",
-      "eventDate": 1724985600000,
-      "userId": "user_2gPVNqOyYTWWdzO0VJOVcktHpzG"
-    },
-    {
-      "name": "Wimbledon 2024 - Men's Final",
-      "description": "The culmination of the world's most prestigious tennis tournament",
-      "price": 750.00,
-      "totalTickets": 40,
-      "location": "Centre Court, All England Club, London",
-      "eventDate": 1720578600000,
-      "userId": "user_2hQWOrPzZUXXezP1WKPWdluIqzH"
-    },
-    {
-      "name": "Harry Potter and the Cursed Child",
-      "description": "The eighth story in the Harry Potter series comes to life on stage",
-      "price": 175.00,
-      "totalTickets": 100,
-      "location": "Palace Theatre, London",
-      "eventDate": 1727222400000,
-      "userId": "user_2iRXPsQAaVYYfAQ2XLQXemvJrzI"
-    }
-  ]
+  {
+    "name": "Teachers' Day Celebration",
+    "description": "Honoring our mentors with performances, speeches, and gratitude.",
+    "price": 499.99,
+    "totalTickets": 100,
+    "location": "Technopark, Jatani, KIST, Mini Auditorium",
+    "eventDate": 1723845600000,
+    "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
+  },
+  {
+    "name": "Annual Sports Meet",
+    "description": "Get ready for a week of athletic spirit and team events!",
+    "price": 899.99,
+    "totalTickets": 50,
+    "location": "Technopark, Jatani, KIST, Main Ground",
+    "eventDate": 1717891200000,
+    "userId": "user_2bFMHkGxZPWVVyJ5QEJQxfsCkxB"
+  },
+  {
+    "name": "Utopia: Intercollege Fest",
+    "description": "A blend of culture, creativity, and competition under one roof!",
+    "price": 299.99,
+    "totalTickets": 75,
+    "location": "Technopark, Jatani, KIST, Mini Auditorium",
+    "eventDate": 1721788200000,
+    "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+  },
+  {
+    "name": "Tech Carnival 2025",
+    "description": "Explore innovations, tech talks, and coding battles.",
+    "price": 150.00,
+    "totalTickets": 200,
+    "location": "Technopark, Jatani, KIST, Main Ground",
+    "eventDate": 1726012800000,
+    "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+  },
+  {
+    "name": "Freshers Welcome Party",
+    "description": "Welcoming new faces with joy, fun games, and music!",
+    "price": 85.00,
+    "totalTickets": 1000,
+    "location": "Technopark, Jatani, KIST, Mini Auditorium",
+    "eventDate": 1728172800000,
+    "userId": "user_2dOPKmMyZRXXazL7SGLSzhsEmzD"
+  },
+  {
+    "name": "Farewell Bash 2025",
+    "description": "A nostalgic goodbye to our graduating batch with memories and cheers.",
+    "price": 125.00,
+    "totalTickets": 150,
+    "location": "Technopark, Jatani, KIST, Mini Auditorium",
+    "eventDate": 1729382400000,
+    "userId": "user_2eRTLnPxYQWWbzM8THMTaisFnzE"
+  },
+  {
+    "name": "Alumni Reunion Meet",
+    "description": "Connecting past and present – an evening to remember.",
+    "price": 199.99,
+    "totalTickets": 60,
+    "location": "Technopark, Jatani, KIST, Main Ground",
+    "eventDate": 1722393600000,
+    "userId": "user_2fQUMpNzXSVVczN9UINUbjsGozF"
+  },
+  {
+    "name": "Cultural Night Fiesta",
+    "description": "Dance, drama, music, and more – celebrate the diversity of talent.",
+    "price": 450.00,
+    "totalTickets": 80,
+    "location": "Technopark, Jatani, KIST, Mini Auditorium",
+    "eventDate": 1724985600000,
+    "userId": "user_2gPVNqOyYTWWdzO0VJOVcktHpzG"
+  },
+  {
+    "name": "Science Expo & Innovation Fair",
+    "description": "Presenting creative projects and groundbreaking student inventions.",
+    "price": 750.00,
+    "totalTickets": 40,
+    "location": "Technopark, Jatani, KIST, Main Ground",
+    "eventDate": 1720578600000,
+    "userId": "user_2hQWOrPzZUXXezP1WKPWdluIqzH"
+  },
+  {
+    "name": "Independence Day Celebration",
+    "description": "76 Independence Day fireworks and festivities",
+    "price": 200.00,
+    "totalTickets": 100,
+    "location": "Technopark, Jatani, KIST, Main Ground",
+    "eventDate": 1727222400000,
+    "userId": "user_2iRXPsQAaVYYfAQ2XLQXemvJrzI"
+  }
+]
