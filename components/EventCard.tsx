@@ -13,27 +13,36 @@ import {
   // XCircle,
   PencilIcon,
   StarIcon,
+  CircleArrowRight,
+  LoaderCircle,
+  XCircle,
+  Check,
 } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 // import PurchaseTicket from "./PurchaseTicket";
 import { useRouter } from "next/navigation";
+import { useStorageUrl } from "@/lib/utils";
 // import { useStorageUrl } from "@/lib/utils";
-// import Image from "next/image";
+import Image from "next/image";
+
+
+// Todo 139
+
 
 export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
   const { user } = useUser();
   const router = useRouter();
   const event = useQuery(api.events.getById, { eventId });
   const availability = useQuery(api.events.getEventAvailability, { eventId });
-  // const userTicket = useQuery(api.tickets.getUserTicketForEvent, {
-  //   eventId,
-  //   userId: user?.id ?? "",
-  // });
-  // const queuePosition = useQuery(api.waitingList.getQueuePosition, {
-  //   eventId,
-  //   userId: user?.id ?? "",
-  // });
-  // const imageUrl = useStorageUrl(event?.imageStorageId);
+  const userTicket = useQuery(api.tickets.getUserTicketForEvent, {
+    eventId,
+    userId: user?.id ?? "",
+  });
+  const queuePosition = useQuery(api.waitingList.getQueuePosition, {
+    eventId,
+    userId: user?.id ?? "",
+  });
+  const imageUrl = useStorageUrl(event?.imageStorageId);
 
   if (!event || !availability) {
     return null;
@@ -43,50 +52,50 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
 
   const isEventOwner = user?.id === event?.userId;
 
-  // const renderQueuePosition = () => {
-  //   // if (!queuePosition || queuePosition.status !== "waiting") return null;
+  const renderQueuePosition = () => {
+    if (!queuePosition || queuePosition.status !== "waiting") return null;
 
-  //   // if (availability.purchasedCount >= availability.totalTickets) {
-  //   //   return (
-  //   //     <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-  //   //       <div className="flex items-center">
-  //   //         <Ticket className="w-5 h-5 text-gray-400 mr-2" />
-  //   //         <span className="text-gray-600">Event is sold out</span>
-  //   //       </div>
-  //   //     </div>
-  //   //   );
-  //   // }
+    if (availability.purchasedCount >= availability.totalTickets) {
+      return (
+        <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
+          <div className="flex items-center">
+            <Ticket className="w-5 h-5 text-gray-400 mr-2" />
+            <span className="text-gray-600">Event is sold out</span>
+          </div>
+        </div>
+      );
+    }
 
-  //   // if (queuePosition.position === 2) {
-  //   //   return (
-  //   //     <div className="flex flex-col lg:flex-row items-center justify-between p-3 bg-amber-50 rounded-lg border border-amber-100">
-  //   //       <div className="flex items-center">
-  //   //         <CircleArrowRight className="w-5 h-5 text-amber-500 mr-2" />
-  //   //         <span className="text-amber-700 font-medium">
-  //   //           You&apos;re next in line! (Queue position:{" "}
-  //   //           {queuePosition.position})
-  //   //         </span>
-  //   //       </div>
-  //   //       <div className="flex items-center">
-  //   //         <LoaderCircle className="w-4 h-4 mr-1 animate-spin text-amber-500" />
-  //   //         <span className="text-amber-600 text-sm">Waiting for ticket</span>
-  //   //       </div>
-  //   //     </div>
-  //   //   );
-  //   // }
+    if (queuePosition.position === 2) {
+      return (
+        <div className="flex flex-col lg:flex-row items-center justify-between p-3 bg-amber-50 rounded-lg border border-amber-100">
+          <div className="flex items-center">
+            <CircleArrowRight className="w-5 h-5 text-amber-500 mr-2" />
+            <span className="text-amber-700 font-medium">
+              You&apos;re next in line! (Queue position:{" "}
+              {queuePosition.position})
+            </span>
+          </div>
+          <div className="flex items-center">
+            <LoaderCircle className="w-4 h-4 mr-1 animate-spin text-amber-500" />
+            <span className="text-amber-600 text-sm">Waiting for ticket</span>
+          </div>
+        </div>
+      );
+    }
 
-  //   return (
-  //     <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
-  //       <div className="flex items-center">
-  //         <LoaderCircle className="w-4 h-4 mr-2 animate-spin text-blue-500" />
-  //         <span className="text-blue-700">Queue position</span>
-  //       </div>
-  //       <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
-  //         {/* #{queuePosition.position} */}
-  //       </span>
-  //     </div>
-  //   );
-  // };
+    return (
+      <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg border border-blue-100">
+        <div className="flex items-center">
+          <LoaderCircle className="w-4 h-4 mr-2 animate-spin text-blue-500" />
+          <span className="text-blue-700">Queue position</span>
+        </div>
+        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+          #{queuePosition.position}
+        </span>
+      </div>
+    );
+  };
 
   const renderTicketStatus = () => {
     if (!user) return null;
@@ -108,43 +117,44 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
       );
     }
 
-    // if (userTicket) {
-    //   return (
-    //     <div className="mt-4 flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
-    //       <div className="flex items-center">
-    //         <Check className="w-5 h-5 text-green-600 mr-2" />
-    //         <span className="text-green-700 font-medium">
-    //           You have a ticket!
-    //         </span>
-    //       </div>
-    //       <button
-    //         onClick={() => router.push(`/tickets/${userTicket._id}`)}
-    //         className="text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-full font-medium shadow-sm transition-colors duration-200 flex items-center gap-1"
-    //       >
-    //         View your ticket
-    //       </button>
-    //     </div>
-    //   );
-    // }
+    if (userTicket) {
+      return (
+        <div className="mt-4 flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
+          <div className="flex items-center">
+            <Check className="w-5 h-5 text-green-600 mr-2" />
+            <span className="text-green-700 font-medium">
+              You have a ticket!
+            </span>
+          </div>
+          <button
+            onClick={() => router.push(`/tickets/${userTicket._id}`)}
+            className="text-sm bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-full font-medium shadow-sm transition-colors duration-200 flex items-center gap-1"
+          >
+            View your ticket
+          </button>
+        </div>
+      );
+    }
 
-    // if (queuePosition) {
-    //   return (
-    //     <div className="mt-4">
-    //       {queuePosition.status === "offered" && (
-    //         <PurchaseTicket eventId={eventId} />
-    //       )}
-    //       {renderQueuePosition()}
-    //       {queuePosition.status === "expired" && (
-    //         <div className="p-3 bg-red-50 rounded-lg border border-red-100">
-    //           <span className="text-red-700 font-medium flex items-center">
-    //             <XCircle className="w-5 h-5 mr-2" />
-    //             Offer expired
-    //           </span>
-    //         </div>
-    //       )}
-    //     </div>
-    //   );
-    // }
+    if (queuePosition) {
+      return (
+        <div className="mt-4">
+          {queuePosition.status === "offered" && (
+            // <PurchaseTicket eventId={eventId} />
+            <div></div>
+          )}
+          {renderQueuePosition()}
+          {queuePosition.status === "expired" && (
+            <div className="p-3 bg-red-50 rounded-lg border border-red-100">
+              <span className="text-red-700 font-medium flex items-center">
+                <XCircle className="w-5 h-5 mr-2" />
+                Offer expired
+              </span>
+            </div>
+          )}
+        </div>
+      );
+    }
 
     return null;
   };
@@ -157,7 +167,7 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
       }`}
     >
       {/* Event Image */}
-      {/* {imageUrl && (
+      {imageUrl && (
         <div className="relative w-full h-48">
           <Image
             src={imageUrl}
@@ -168,11 +178,11 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
         </div>
-      )} */}
+      )}
 
-      {/* <div className={`p-6 ${imageUrl ? "relative" : ""}`}> */}
-      <div className={`p-6`}>
-        <div className="flex justify-between items-start">
+      <div className={`p-6 ${imageUrl ? "relative" : ""}`}>
+      {/* <div className={`p-6`}> */}
+        <div className="flex justify-between items-start">/
           <div>
             <div className="flex flex-col items-start gap-2">
               {isEventOwner && (
@@ -201,11 +211,11 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
             >
               ₹{event.price.toFixed(2)}
             </span>
-            {/* {availability.purchasedCount >= availability.totalTickets && (
+            {availability.purchasedCount >= availability.totalTickets && (
               <span className="px-4 py-1.5 bg-red-50 text-red-700 font-semibold rounded-full text-sm">
                 Sold Out
               </span>
-            )} */}
+            )}
           </div>
         </div>
 
@@ -226,7 +236,7 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
           <div className="flex items-center text-gray-600">
             <Ticket className="w-4 h-4 mr-2" />
             <span>
-              {/* {availability.totalTickets - availability.purchasedCount} /{" "}
+              {availability.totalTickets - availability.purchasedCount} /{" "}
               {availability.totalTickets} available
               {!isPastEvent && availability.activeOffers > 0 && (
                 <span className="text-amber-600 text-sm ml-2">
@@ -234,7 +244,7 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
                   {availability.activeOffers === 1 ? "person" : "people"} trying
                   to buy)
                 </span>
-              )} */}
+              )}
             </span>
           </div>
         </div>
