@@ -26,7 +26,7 @@ export default function SplashScreen() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
-          Welcome to EntryIQ
+          Welcome to EntryIQ Developed By Swapna and Group
         </motion.h1>
 
         {/* Tagline */}
