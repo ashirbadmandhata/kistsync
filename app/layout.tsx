@@ -6,6 +6,7 @@ import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import Header from "@/components/Header";
 import { Footer } from "@/components/footer";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
+import AppWrapper from "@/components/AppWrapper"; // <-- import here
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KISTSYNC",
+  title: "EntryIQ",
   description: "Advanced College Event Ticketing Platform",
 };
 
@@ -34,10 +35,12 @@ export default function RootLayout({
       >
         <ConvexClientProvider>
           <ClerkProvider>
-            <Header />
-            <SyncUserWithConvex />
-            <main className="flex-grow">{children}</main>
-            <Footer />
+            <AppWrapper>
+              <Header />
+              <SyncUserWithConvex />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </AppWrapper>
           </ClerkProvider>
         </ConvexClientProvider>
       </body>
