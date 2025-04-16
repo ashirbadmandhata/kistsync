@@ -1,64 +1,44 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
+import { AnimatedLogo } from "./logo"
+// import { AnimatedLogo } from "./AnimatedLogo"
 
 export default function SplashScreen() {
-  const [isVisible, setIsVisible] = useState(true)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false)
-    }, 2000) // Duration of splash screen (2 sec)
-
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
-    <AnimatePresence>
-      {isVisible && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-blue-900 via-blue-800 to-emerald-900 text-white">
+      {/* Centered Content */}
+      <div className="flex flex-col items-center justify-center gap-6 text-center px-4">
+        
+        {/* Animated Logo */}
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-black"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            className="w-14 h-14"
-          >
-            {/* EntryIQ Logo */}
-            <svg
-              viewBox="0 0 32 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-            >
-              <circle
-                cx="16"
-                cy="16"
-                r="14"
-                stroke="url(#gradientMain)"
-                strokeWidth="2.5"
-              />
-              <path
-                d="M20 10H12V14H18V16H12V22H20"
-                stroke="url(#gradientMain)"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <defs>
-                <linearGradient id="gradientMain" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#10B981" />
-                  <stop offset="1" stopColor="#3B82F6" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </motion.div>
+          <AnimatedLogo />
         </motion.div>
-      )}
-    </AnimatePresence>
+
+        {/* App Name */}
+        <motion.h1
+          className="text-3xl md:text-4xl font-bold tracking-wide bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+        >
+          Welcome to EntryIQ
+        </motion.h1>
+
+        {/* Tagline */}
+        <motion.p
+          className="text-sm md:text-base text-white/80 max-w-md"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+        >
+          College event ticketing made simple. Get ready to explore, book, and enjoy — all in one place.
+        </motion.p>
+      </div>
+    </div>
   )
 }

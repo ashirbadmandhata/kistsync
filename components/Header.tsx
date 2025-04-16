@@ -13,8 +13,7 @@ function Header() {
           <Sparkles className="h-4 w-4 flex-shrink-0" />
           <div className="relative w-full overflow-hidden">
             <div className="animate-scroll whitespace-nowrap">
-              Introducing to KISTSYNC! Book your tickets in a minute. The website is under development, 
-              and some functionalities may not work. Stay tuned, we&apos;ll be back soon!
+            🎉 Welcome to EntryIQ! Book your tickets in seconds — fast, simple, and smart. We&apos;re still under development — some features might be a work in progress. Thanks for your patience 🚀
             </div>
           </div>
           <X className="absolute right-4 h-4 w-4 cursor-pointer opacity-70 hover:opacity-100" />
