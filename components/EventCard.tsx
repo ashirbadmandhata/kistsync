@@ -182,7 +182,7 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
 
       <div className={`p-6 ${imageUrl ? "relative" : ""}`}>
       {/* <div className={`p-6`}> */}
-        <div className="flex justify-between items-start">/
+        <div className="flex justify-between items-start">
           <div>
             <div className="flex flex-col items-start gap-2">
               {isEventOwner && (

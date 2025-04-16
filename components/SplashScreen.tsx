@@ -36,7 +36,7 @@ export default function SplashScreen() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          College event ticketing made simple. Get ready to explore, book, and enjoy — all in one place. Developed by Swapna and Group.
+          College event ticketing made simple. Get ready to explore, book, and enjoy — all in one place.
         </motion.p>
         
         {/* Developed By Text */}
