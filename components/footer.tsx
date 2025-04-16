@@ -21,7 +21,7 @@ export function Footer() {
           >
             <AnimatedLogo />
             <p className="text-gray-300 text-sm max-w-xs leading-relaxed">
-              EntryIQ is an all-in-one workspace for collaborative project management — built for modern teams and powered by the open-source spirit.
+              EntryIQ is a next-gen ticket booking platform that simplifies event management — from online bookings and real-time updates to analytics and check-ins.
             </p>
             <div className="flex items-center gap-4 mt-6">
               {[Github, Twitter, Linkedin].map((Icon, index) => (
@@ -53,7 +53,7 @@ export function Footer() {
               </li>
               <li className="flex gap-3">
                 <MapPin className="w-5 h-5 text-emerald-400" />
-                <span>Technopark, Jatani, BBSR 752050</span>
+                <span>Technopark, Jatani, BBSR - 752050</span>
               </li>
               <li className="flex gap-3">
                 <Phone className="w-5 h-5 text-emerald-400" />
