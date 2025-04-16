@@ -24,6 +24,7 @@ import { useRouter } from "next/navigation";
 import { useStorageUrl } from "@/lib/utils";
 // import { useStorageUrl } from "@/lib/utils";
 import Image from "next/image";
+import PurchaseTicket from "./PurchaseTicket";
 
 
 // Todo 139
@@ -140,8 +141,7 @@ export default function EventCard({ eventId }: { eventId: Id<"events"> }) {
       return (
         <div className="mt-4">
           {queuePosition.status === "offered" && (
-            // <PurchaseTicket eventId={eventId} />
-            <div></div>
+            <PurchaseTicket eventId={eventId} />
           )}
           {renderQueuePosition()}
           {queuePosition.status === "expired" && (

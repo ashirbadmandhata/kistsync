@@ -26,7 +26,7 @@ export default function SplashScreen() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
-          Welcome to EntryIQ Developed By Swapna and Group
+          Welcome to EntryIQ
         </motion.h1>
 
         {/* Tagline */}
@@ -37,6 +37,16 @@ export default function SplashScreen() {
           transition={{ delay: 0.6, duration: 0.6 }}
         >
           College event ticketing made simple. Get ready to explore, book, and enjoy — all in one place. Developed by Swapna and Group.
+        </motion.p>
+        
+        {/* Developed By Text */}
+        <motion.p
+          className="text-xs md:text-sm text-white/60 mt-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          Developed By Swapna & Group
         </motion.p>
       </div>
     </div>
