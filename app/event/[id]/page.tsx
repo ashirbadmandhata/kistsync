@@ -107,6 +107,7 @@ export default function EventPage() {
                     <li>• Please arrive 30 minutes before the event starts</li>
                     <li>• Tickets are non-refundable</li>
                     <li>• Age restriction: 18+</li>
+                    <li>• Bring your ticket at the time of arrival</li>
                   </ul>
                 </div>
               </div>

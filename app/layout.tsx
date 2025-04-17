@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import { Footer } from "@/components/footer";
 import SyncUserWithConvex from "@/components/SyncUserWithConvex";
 import AppWrapper from "@/components/AppWrapper"; // <-- import here
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default function RootLayout({
               <SyncUserWithConvex />
               <main className="flex-grow">{children}</main>
               <Footer />
+              <Toaster />
             </AppWrapper>
           </ClerkProvider>
         </ConvexClientProvider>
