@@ -1,31 +1,28 @@
 import { internalMutation, mutation, query } from "./_generated/server";
-// import { internalMutation, mutation, query } from "./_generated/server";
 import { v } from "convex/values";
-// import { Id } from "./_generated/dataModel";
-// import { DURATIONS, WAITING_LIST_STATUS, TICKET_STATUS } from "./constants";
+import { Id } from "./_generated/dataModel";
 import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from "./constants";
 import { internal } from "./_generated/api";
-// import { internal } from "./_generated/api";
 
 /**
  * Helper function to group waiting list entries by event ID.
  * Used for batch processing expired offers by event.
  */
-// function groupByEvent(
-//   offers: Array<{ eventId: Id<"events">; _id: Id<"waitingList"> }>
-// ) {
-//   return offers.reduce(
-//     (acc, offer) => {
-//       const eventId = offer.eventId;
-//       if (!acc[eventId]) {
-//         acc[eventId] = [];
-//       }
-//       acc[eventId].push(offer);
-//       return acc;
-//     },
-//     {} as Record<Id<"events">, typeof offers>
-//   );
-// }
+function groupByEvent(
+  offers: Array<{ eventId: Id<"events">; _id: Id<"waitingList"> }>
+) {
+  return offers.reduce(
+    (acc, offer) => {
+      const eventId = offer.eventId;
+      if (!acc[eventId]) {
+        acc[eventId] = [];
+      }
+      acc[eventId].push(offer);
+      return acc;
+    },
+    {} as Record<Id<"events">, typeof offers>
+  );
+}
 
 /**
  * Query to get a user's current position in the waiting list for an event.
@@ -184,38 +181,38 @@ export const expireOffer = internalMutation({
 //  * Groups expired offers by event for efficient processing and updates queue
 //  * for each affected event after cleanup.
 //  */
-// export const cleanupExpiredOffers = internalMutation({
-//   args: {},
-//   handler: async (ctx) => {
-//     const now = Date.now();
-//     // Find all expired but not yet cleaned up offers
-//     const expiredOffers = await ctx.db
-//       .query("waitingList")
-//       .filter((q) =>
-//         q.and(
-//           q.eq(q.field("status"), WAITING_LIST_STATUS.OFFERED),
-//           q.lt(q.field("offerExpiresAt"), now)
-//         )
-//       )
-//       .collect();
+export const cleanupExpiredOffers = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const now = Date.now();
+    // Find all expired but not yet cleaned up offers
+    const expiredOffers = await ctx.db
+      .query("waitingList")
+      .filter((q) =>
+        q.and(
+          q.eq(q.field("status"), WAITING_LIST_STATUS.OFFERED),
+          q.lt(q.field("offerExpiresAt"), now)
+        )
+      )
+      .collect();
 
-//     // Group by event for batch processing
-//     const grouped = groupByEvent(expiredOffers);
+    // Group by event for batch processing
+    const grouped = groupByEvent(expiredOffers);
 
-//     // Process each event's expired offers and update queue
-//     for (const [eventId, offers] of Object.entries(grouped)) {
-//       await Promise.all(
-//         offers.map((offer) =>
-//           ctx.db.patch(offer._id, {
-//             status: WAITING_LIST_STATUS.EXPIRED,
-//           })
-//         )
-//       );
+    // Process each event's expired offers and update queue
+    for (const [eventId, offers] of Object.entries(grouped)) {
+      await Promise.all(
+        offers.map((offer) =>
+          ctx.db.patch(offer._id, {
+            status: WAITING_LIST_STATUS.EXPIRED,
+          })
+        )
+      );
 
-//       await processQueue(ctx, { eventId: eventId as Id<"events"> });
-//     }
-//   },
-// });
+      await processQueue(ctx, { eventId: eventId as Id<"events"> });
+    }
+  },
+});
 
 export const releaseTicket = mutation({
   args: {
