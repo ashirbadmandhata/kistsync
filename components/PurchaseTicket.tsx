@@ -57,18 +57,19 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
 
   const handlePurchase = async () => {
     if (!user || !event) return;
-
+  
     setIsLoading(true);
-
+  
     try {
-      await createTicket({
+      const ticketId = await createTicket({
         eventId,
         userId: user.id,
         eventName: event.name,
         price: event.price,
       });
-
-      router.push("/tickets/purchase-success");
+  
+      // ✅ Pass ticketId as a query parameter to the success page
+      router.push(`/tickets/purchase-success?ticketId=${ticketId}`);
     } catch (error) {
       console.error("Error creating ticket:", error);
       setIsLoading(false);
