@@ -7,11 +7,11 @@ import { api } from "@/convex/_generated/api";
 import { useMutation, useQuery } from "convex/react";
 import { Ticket } from "lucide-react";
 import ReleaseTicket from "./ReleaseTicket";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
   const { user } = useUser();
-  const router = useRouter();
+  // const router = useRouter();
 
   const queuePosition = useQuery(api.waitingList.getQueuePosition, {
     eventId,
@@ -67,8 +67,12 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
         eventName: event.name,
         price: event.price,
       });
-
-      router.push("/tickets/purchase-success");
+      
+      // Replace this line:
+      // router.push("/tickets/purchase-success");
+      
+      // With this:
+      window.location.href = "/tickets/purchase-success";
     } catch (error) {
       console.error("Error creating ticket:", error);
       setIsLoading(false);
