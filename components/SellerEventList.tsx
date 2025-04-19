@@ -75,11 +75,11 @@ function SellerEventCard({
     <div
       className={`bg-white rounded-lg shadow-sm border ${event.is_cancelled ? "border-red-200" : "border-gray-200"} overflow-hidden`}
     >
-      <div className="p-6">
-        <div className="flex items-start gap-6">
+      <div className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
           {/* Event Image */}
           {imageUrl && (
-            <div className="relative w-40 h-40 rounded-lg overflow-hidden shrink-0">
+            <div className="relative w-full sm:w-40 h-40 rounded-lg overflow-hidden shrink-0">
               <Image
                 src={imageUrl}
                 alt={event.name}
@@ -91,12 +91,12 @@ function SellerEventCard({
 
           {/* Event Details */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900">
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
                   {event.name}
                 </h3>
-                <p className="mt-1 text-gray-500">{event.description}</p>
+                <p className="mt-1 text-sm text-gray-500">{event.description}</p>
                 {event.is_cancelled && (
                   <div className="mt-2 flex items-center gap-2 text-red-600">
                     <Ban className="w-4 h-4" />
@@ -106,12 +106,12 @@ function SellerEventCard({
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex gap-2">
                 {!isPastEvent && !event.is_cancelled && (
                   <>
                     <Link
                       href={`/seller/events/${event._id}/edit`}
-                      className="shrink-0 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                      className="shrink-0 flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
                     >
                       <Edit className="w-4 h-4" />
                       Edit
@@ -122,7 +122,7 @@ function SellerEventCard({
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-gray-50 p-3 rounded-lg">
                 <div className="flex items-center gap-2 text-gray-600 mb-1">
                   <Ticket className="w-4 h-4" />
@@ -158,7 +158,7 @@ function SellerEventCard({
                   </span>
                 </div>
                 <p className="text-2xl font-semibold text-gray-900">
-                  £
+                  ₹
                   {event.is_cancelled
                     ? event.metrics.refundedTickets * event.price
                     : event.metrics.revenue}
@@ -184,8 +184,8 @@ function SellerEventCard({
                   {event.is_cancelled
                     ? "Cancelled"
                     : isPastEvent
-                      ? "Ended"
-                      : "Active"}
+                    ? "Ended"
+                    : "Active"}
                 </p>
               </div>
             </div>
