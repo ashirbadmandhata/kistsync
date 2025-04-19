@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Ban } from "lucide-react";
-// import { refundEventTickets } from "@/app/actions/refundEventTickets";
 import { Id } from "@/convex/_generated/dataModel";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -20,23 +19,20 @@ export default function CancelEventButton({
   const cancelEvent = useMutation(api.events.cancelEvent);
 
   const handleCancel = async () => {
-    if (
-      !confirm(
-        "Are you sure you want to cancel this event? All tickets will be refunded and the event will be cancelled permanently."
-      )
-    ) {
-      return;
-    }
+    const confirmed = confirm(
+      "Are you sure you want to cancel this event? All tickets will be refunded."
+    );
+    if (!confirmed) return;
 
     setIsCancelling(true);
     try {
-    //   await refundEventTickets(eventId);
+      // Call the cancel event mutation to cancel the event and refund tickets
       await cancelEvent({ eventId });
       toast({
         title: "Event cancelled",
-        description: "All tickets have been refunded successfully.",
+        description: "All tickets have been marked as refunded.",
       });
-      router.push("/seller/events");
+      router.push("/seller/events"); // Redirect to the seller events page after cancellation
     } catch (error) {
       console.error("Failed to cancel event:", error);
       toast({
@@ -52,7 +48,7 @@ export default function CancelEventButton({
   return (
     <button
       onClick={handleCancel}
-      disabled={isCancelling}
+      disabled={isCancelling} // Disable the button while processing
       className="flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
     >
       <Ban className="w-4 h-4" />
