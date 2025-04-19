@@ -9,6 +9,7 @@ import Ticket from "@/components/Ticket";
 import Link from "next/link";
 import { ArrowLeft, Download, Share2 } from "lucide-react";
 import { useEffect } from "react";
+import { jsPDF } from "jspdf";
 
 export default function TicketPage() {
   const params = useParams();
@@ -26,14 +27,32 @@ export default function TicketPage() {
       redirect("/tickets");
     }
 
-    if (!ticket.event) {
+    if (!ticket?.event) {
       redirect("/tickets");
     }
   }, [user, ticket]);
 
   if (!ticket || !ticket.event) {
-    return null;
+    return null; // Early return if ticket or ticket.event is not available
   }
+
+  // Function to download the ticket as PDF
+  const handleDownload = () => {
+    if (!ticket?.event) return; // Safeguard check if ticket.event is null
+
+    const doc = new jsPDF();
+
+    // Add content to the PDF
+    doc.text("Ticket Information", 20, 20);
+    doc.text(`Event: ${ticket.event.name}`, 20, 30);
+    doc.text(`Date: ${new Date(ticket.event.eventDate).toLocaleDateString()}`, 20, 40);
+    doc.text(`Location: ${ticket.event.location}`, 20, 50);
+    doc.text(`Ticket Status: ${ticket.event.is_cancelled ? "Cancelled" : "Valid"}`, 20, 60);
+    doc.text(`Purchased on: ${new Date(ticket.purchasedAt).toLocaleDateString()}`, 20, 70);
+
+    // Save the PDF file
+    doc.save("ticket.pdf");
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -49,7 +68,11 @@ export default function TicketPage() {
               Back to My Tickets
             </Link>
             <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100">
+              {/* Save Button */}
+              <button
+                onClick={handleDownload}
+                className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
+              >
                 <Download className="w-4 h-4" />
                 <span className="text-sm">Save</span>
               </button>
@@ -64,20 +87,14 @@ export default function TicketPage() {
           <div
             className={`bg-white p-6 rounded-lg shadow-sm border ${ticket.event.is_cancelled ? "border-red-200" : "border-gray-100"}`}
           >
-            <h1 className="text-2xl font-bold text-gray-900">
-              {ticket.event.name}
-            </h1>
+            <h1 className="text-2xl font-bold text-gray-900">{ticket.event.name}</h1>
             <p className="mt-1 text-gray-600">
               {new Date(ticket.event.eventDate).toLocaleDateString()} at{" "}
               {ticket.event.location}
             </p>
             <div className="mt-4 flex items-center gap-4">
               <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  ticket.event.is_cancelled
-                    ? "bg-red-50 text-red-700"
-                    : "bg-green-50 text-green-700"
-                }`}
+                className={`px-3 py-1 rounded-full text-sm font-medium ${ticket.event.is_cancelled ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}
               >
                 {ticket.event.is_cancelled ? "Cancelled" : "Valid Ticket"}
               </span>
@@ -87,8 +104,7 @@ export default function TicketPage() {
             </div>
             {ticket.event.is_cancelled && (
               <p className="mt-4 text-sm text-red-600">
-                This event has been cancelled. A refund will be processed if it
-                hasn&apos;t been already.
+                This event has been cancelled. A refund will be processed if it hasn&apos;t been already.
               </p>
             )}
           </div>
