@@ -50,7 +50,7 @@ function Header() {
           <SignedIn>
             <div className="flex items-center gap-3">
               <Link href="/seller">
-                <button className="bg-green-600 text-white px-3 py-1.5 text-sm rounded-lg hover:bg-green-700 transition">
+                <button className="bg-blue-600 text-white px-3 py-1.5 text-sm rounded-lg hover:bg-blue-700 transition">
                   Sell Tickets
                 </button>
               </Link>
@@ -77,7 +77,7 @@ function Header() {
         <div className="lg:hidden w-full flex justify-center gap-3">
           <SignedIn>
             <Link href="/seller" className="flex-1">
-              <button className="w-full bg-green-600 text-white px-3 py-1.5 text-sm rounded-lg hover:bg-green-700 transition">
+              <button className="w-full bg-blue-600 text-white px-3 py-1.5 text-sm rounded-lg hover:bg-blue-700 transition">
                 Sell Tickets
               </button>
             </Link>

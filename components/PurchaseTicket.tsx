@@ -18,6 +18,10 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
     userId: user?.id ?? "",
   });
 
+  const event = useQuery(api.events.getEventById, {
+    eventId,
+  });
+
   const [timeRemaining, setTimeRemaining] = useState("");
   // const [isLoading, setIsLoading] = useState(false);
   const [isLoading] = useState(false);
@@ -52,24 +56,32 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
     return () => clearInterval(interval);
   }, [offerExpiresAt, isExpired]);
 
-  const handlePurchase = async () => {}
-    if (!user) return;
-
-  //   try {
-  //     setIsLoading(true);
-  //     const { sessionUrl } = await createStripeCheckoutSession({
-  //       eventId,
-  //     });
-
-  //     if (sessionUrl) {
-  //       router.push(sessionUrl);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error creating checkout session:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const handlePurchase = async () => {
+    if (!user || !event) return;
+  
+    try {
+      const res = await fetch("/api/createCheckoutSession", {
+        method: "POST",
+        body: JSON.stringify({
+          eventId,
+          eventName: event.name,
+          eventPrice: event.price, // assume price is in INR
+          userId: user.id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
+  };
+  
 
   if (!user || !queuePosition || queuePosition.status !== "offered") {
     return null;

@@ -20,6 +20,14 @@ export type Metrics = {
   revenue: number;
 };
 
+export const getEventById = query({
+  args: { eventId: v.id("events") },
+  handler: async (ctx, { eventId }) => {
+    const event = await ctx.db.get(eventId);
+    if (!event) throw new Error("Event not found");
+    return event;
+  },
+});
 // Initialize rate limiter
 // const rateLimiter = new RateLimiter(components.rateLimiter, {
 //   queueJoin: {
