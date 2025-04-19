@@ -8,7 +8,8 @@ import { redirect, useParams } from "next/navigation";
 import Ticket from "@/components/Ticket";
 import Link from "next/link";
 import { ArrowLeft, Download, Share2 } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 
 export default function TicketPage() {
@@ -18,40 +19,41 @@ export default function TicketPage() {
     ticketId: params.id as Id<"tickets">,
   });
 
+  const ticketRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!user) {
       redirect("/");
     }
 
-    if (!ticket || ticket.userId !== user.id) {
-      redirect("/tickets");
-    }
-
-    if (!ticket?.event) {
+    if (!ticket || ticket.userId !== user.id || !ticket.event) {
       redirect("/tickets");
     }
   }, [user, ticket]);
 
   if (!ticket || !ticket.event) {
-    return null; // Early return if ticket or ticket.event is not available
+    return null;
   }
 
-  // Function to download the ticket as PDF
-  const handleDownload = () => {
-    if (!ticket?.event) return; // Safeguard check if ticket.event is null
+  const { event } = ticket;
 
-    const doc = new jsPDF();
+  const handleDownload = async () => {
+    if (!ticketRef.current) return;
 
-    // Add content to the PDF
-    doc.text("Ticket Information", 20, 20);
-    doc.text(`Event: ${ticket.event.name}`, 20, 30);
-    doc.text(`Date: ${new Date(ticket.event.eventDate).toLocaleDateString()}`, 20, 40);
-    doc.text(`Location: ${ticket.event.location}`, 20, 50);
-    doc.text(`Ticket Status: ${ticket.event.is_cancelled ? "Cancelled" : "Valid"}`, 20, 60);
-    doc.text(`Purchased on: ${new Date(ticket.purchasedAt).toLocaleDateString()}`, 20, 70);
+    const canvas = await html2canvas(ticketRef.current, {
+      useCORS: true,
+      scale: 2,
+    });
 
-    // Save the PDF file
-    doc.save("ticket.pdf");
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "px",
+      format: [canvas.width, canvas.height],
+    });
+
+    pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+    pdf.save(`${event.name}-ticket.pdf`);
   };
 
   return (
@@ -68,7 +70,6 @@ export default function TicketPage() {
               Back to My Tickets
             </Link>
             <div className="flex items-center gap-4">
-              {/* Save Button */}
               <button
                 onClick={handleDownload}
                 className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
@@ -85,24 +86,29 @@ export default function TicketPage() {
 
           {/* Event Info Summary */}
           <div
-            className={`bg-white p-6 rounded-lg shadow-sm border ${ticket.event.is_cancelled ? "border-red-200" : "border-gray-100"}`}
+            className={`bg-white p-6 rounded-lg shadow-sm border ${
+              event.is_cancelled ? "border-red-200" : "border-gray-100"
+            }`}
           >
-            <h1 className="text-2xl font-bold text-gray-900">{ticket.event.name}</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{event.name}</h1>
             <p className="mt-1 text-gray-600">
-              {new Date(ticket.event.eventDate).toLocaleDateString()} at{" "}
-              {ticket.event.location}
+              {new Date(event.eventDate).toLocaleDateString()} at {event.location}
             </p>
             <div className="mt-4 flex items-center gap-4">
               <span
-                className={`px-3 py-1 rounded-full text-sm font-medium ${ticket.event.is_cancelled ? "bg-red-50 text-red-700" : "bg-green-50 text-green-700"}`}
+                className={`px-3 py-1 rounded-full text-sm font-medium ${
+                  event.is_cancelled
+                    ? "bg-red-50 text-red-700"
+                    : "bg-green-50 text-green-700"
+                }`}
               >
-                {ticket.event.is_cancelled ? "Cancelled" : "Valid Ticket"}
+                {event.is_cancelled ? "Cancelled" : "Valid Ticket"}
               </span>
               <span className="text-sm text-gray-500">
                 Purchased on {new Date(ticket.purchasedAt).toLocaleDateString()}
               </span>
             </div>
-            {ticket.event.is_cancelled && (
+            {event.is_cancelled && (
               <p className="mt-4 text-sm text-red-600">
                 This event has been cancelled. A refund will be processed if it hasn&apos;t been already.
               </p>
@@ -110,30 +116,32 @@ export default function TicketPage() {
           </div>
         </div>
 
-        {/* Ticket Component */}
-        <Ticket ticketId={ticket._id} />
+        {/* Ticket Component (for PDF) */}
+        <div ref={ticketRef}>
+          <Ticket ticketId={ticket._id} />
+        </div>
 
-        {/* Additional Information */}
+        {/* Support Info */}
         <div
           className={`mt-8 rounded-lg p-4 ${
-            ticket.event.is_cancelled
+            event.is_cancelled
               ? "bg-red-50 border-red-100 border"
               : "bg-blue-50 border-blue-100 border"
           }`}
         >
           <h3
             className={`text-sm font-medium ${
-              ticket.event.is_cancelled ? "text-red-900" : "text-blue-900"
+              event.is_cancelled ? "text-red-900" : "text-blue-900"
             }`}
           >
             Need Help?
           </h3>
           <p
             className={`mt-1 text-sm ${
-              ticket.event.is_cancelled ? "text-red-700" : "text-blue-700"
+              event.is_cancelled ? "text-red-700" : "text-blue-700"
             }`}
           >
-            {ticket.event.is_cancelled
+            {event.is_cancelled
               ? "For questions about refunds or cancellations, please contact our support team at entryiq@gmail.com"
               : "If you have any issues with your ticket, please contact our support team at entryiq@gmail.com"}
           </p>
