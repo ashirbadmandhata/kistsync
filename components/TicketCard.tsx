@@ -38,7 +38,7 @@ export default function TicketCard({ ticketId }: { ticketId: Id<"tickets"> }) {
 
   return (
     <Link
-      href={`/tickets/${ticketId}`}
+      href={`/tickets/success-page`}
       className={`block bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border ${
         ticket.event.is_cancelled ? "border-red-200" : "border-gray-100"
       } overflow-hidden ${isPastEvent ? "opacity-75 hover:opacity-100" : ""}`}
