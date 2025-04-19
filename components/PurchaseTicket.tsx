@@ -1,30 +1,27 @@
 "use client";
 
-// import { createStripeCheckoutSession } from "@/app/actions/createStripeCheckoutSession";
 import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
-// import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Ticket } from "lucide-react";
 import ReleaseTicket from "./ReleaseTicket";
+import { useRouter } from "next/navigation"; // ✅ Add this
 
 export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
-  // const router = useRouter();
   const { user } = useUser();
+  const router = useRouter(); // ✅ For redirecting
+
   const queuePosition = useQuery(api.waitingList.getQueuePosition, {
     eventId,
     userId: user?.id ?? "",
   });
 
-  const event = useQuery(api.events.getEventById, {
-    eventId,
-  });
+  // const event = useQuery(api.events.getEventById, { eventId });
 
   const [timeRemaining, setTimeRemaining] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // updated to be usable
 
   const offerExpiresAt = queuePosition?.offerExpiresAt ?? 0;
   const isExpired = Date.now() > offerExpiresAt;
@@ -57,31 +54,14 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
   }, [offerExpiresAt, isExpired]);
 
   const handlePurchase = async () => {
-    if (!user || !event) return;
-  
-    try {
-      const res = await fetch("/actions/createCheckoutSession", {
-        method: "POST",
-        body: JSON.stringify({
-          eventId,
-          eventName: event.name,
-          eventPrice: event.price, // assume price is in INR
-          userId: user.id,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-  
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (error) {
-      console.error("Error creating checkout session:", error);
-    }
+    if (!user) return;
+
+    setIsLoading(true);
+
+    // You can also trigger DB updates or ticket generation here if needed
+
+    router.push("/tickets/purchase-success"); // ✅ Redirect after "purchase"
   };
-  
 
   if (!user || !queuePosition || queuePosition.status !== "offered") {
     return null;
@@ -119,7 +99,7 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
           className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-4 rounded-lg font-bold shadow-md hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100 text-lg"
         >
           {isLoading
-            ? "Redirecting to checkout..."
+            ? "Redirecting..."
             : "Purchase Your Ticket Now →"}
         </button>
 
