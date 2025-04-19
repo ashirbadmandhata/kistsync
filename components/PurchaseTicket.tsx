@@ -4,24 +4,26 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { Ticket } from "lucide-react";
 import ReleaseTicket from "./ReleaseTicket";
-import { useRouter } from "next/navigation"; // ✅ Add this
+import { useRouter } from "next/navigation";
 
 export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
   const { user } = useUser();
-  const router = useRouter(); // ✅ For redirecting
+  const router = useRouter();
 
   const queuePosition = useQuery(api.waitingList.getQueuePosition, {
     eventId,
     userId: user?.id ?? "",
   });
 
-  // const event = useQuery(api.events.getEventById, { eventId });
+  const event = useQuery(api.events.getEventById, { eventId }); // ✅ uncommented
 
   const [timeRemaining, setTimeRemaining] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // updated to be usable
+  const [isLoading, setIsLoading] = useState(false);
+
+  const createTicket = useMutation(api.tickets.createTicket); // ✅ useMutation hook
 
   const offerExpiresAt = queuePosition?.offerExpiresAt ?? 0;
   const isExpired = Date.now() > offerExpiresAt;
@@ -54,13 +56,23 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
   }, [offerExpiresAt, isExpired]);
 
   const handlePurchase = async () => {
-    if (!user) return;
+    if (!user || !event) return;
 
     setIsLoading(true);
 
-    // You can also trigger DB updates or ticket generation here if needed
+    try {
+      await createTicket({
+        eventId,
+        userId: user.id,
+        eventName: event.name,
+        price: event.price,
+      });
 
-    router.push("/tickets/purchase-success"); // ✅ Redirect after "purchase"
+      router.push("/tickets/purchase-success");
+    } catch (error) {
+      console.error("Error creating ticket:", error);
+      setIsLoading(false);
+    }
   };
 
   if (!user || !queuePosition || queuePosition.status !== "offered") {
@@ -98,13 +110,14 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
           disabled={isExpired || isLoading}
           className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white px-8 py-4 rounded-lg font-bold shadow-md hover:from-amber-600 hover:to-amber-700 transform hover:scale-[1.02] transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:scale-100 text-lg"
         >
-          {isLoading
-            ? "Redirecting..."
-            : "Purchase Your Ticket Now →"}
+          {isLoading ? "Redirecting..." : "Purchase Your Ticket Now →"}
         </button>
 
         <div className="mt-4">
-          <ReleaseTicket eventId={eventId} waitingListId={queuePosition._id} />
+          <ReleaseTicket
+            eventId={eventId}
+            waitingListId={queuePosition._id}
+          />
         </div>
       </div>
     </div>

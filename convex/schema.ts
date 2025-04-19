@@ -15,7 +15,7 @@ export default defineSchema({
     is_cancelled: v.optional(v.boolean()),
   }),
 
-  // Tickets Table
+  // Tickets Table (updated ✅)
   tickets: defineTable({
     eventId: v.id("events"),
     userId: v.string(),
@@ -28,6 +28,10 @@ export default defineSchema({
     ),
     paymentIntentId: v.optional(v.string()),
     amount: v.optional(v.number()),
+
+    // ✅ New fields
+    eventName: v.string(),
+    price: v.number(),
   })
     .index("by_event", ["eventId"])
     .index("by_user", ["userId"])

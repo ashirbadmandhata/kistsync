@@ -1,6 +1,7 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
+// ✅ Get ticket for a user and event
 export const getUserTicketForEvent = query({
   args: {
     eventId: v.id("events"),
@@ -18,6 +19,7 @@ export const getUserTicketForEvent = query({
   },
 });
 
+// ✅ Get ticket with event details
 export const getTicketWithDetails = query({
   args: { ticketId: v.id("tickets") },
   handler: async (ctx, { ticketId }) => {
@@ -33,6 +35,7 @@ export const getTicketWithDetails = query({
   },
 });
 
+// ✅ Get valid or used tickets for an event
 export const getValidTicketsForEvent = query({
   args: { eventId: v.id("events") },
   handler: async (ctx, { eventId }) => {
@@ -46,6 +49,7 @@ export const getValidTicketsForEvent = query({
   },
 });
 
+// ✅ Update ticket status
 export const updateTicketStatus = mutation({
   args: {
     ticketId: v.id("tickets"),
@@ -58,5 +62,25 @@ export const updateTicketStatus = mutation({
   },
   handler: async (ctx, { ticketId, status }) => {
     await ctx.db.patch(ticketId, { status });
+  },
+});
+
+// ✅ NEW: Create a ticket
+export const createTicket = mutation({
+  args: {
+    eventId: v.id("events"),
+    userId: v.string(),
+    eventName: v.string(),
+    price: v.number(),
+  },
+  handler: async (ctx, args) => {
+    return await ctx.db.insert("tickets", {
+      eventId: args.eventId,
+      userId: args.userId,
+      eventName: args.eventName,
+      price: args.price,
+      purchasedAt: Date.now(),
+      status: "valid",
+    });
   },
 });
