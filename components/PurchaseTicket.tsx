@@ -60,7 +60,7 @@ export default function PurchaseTicket({ eventId }: { eventId: Id<"events"> }) {
     if (!user || !event) return;
   
     try {
-      const res = await fetch("/api/createCheckoutSession", {
+      const res = await fetch("/actions/createCheckoutSession", {
         method: "POST",
         body: JSON.stringify({
           eventId,
